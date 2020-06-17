@@ -1,6 +1,9 @@
 package com.javaex.phone;
 
+import java.util.List;
 import java.util.Scanner;
+
+
 
 public class PhoneApp {
 
@@ -13,7 +16,7 @@ public class PhoneApp {
 		Scanner sc = new Scanner(System.in);
 		
 		//리스트 가져오기
-		//List<PersonVo> phoneList = phonedao.getPhoneList();
+		List<PersonVo> keyList;
 		
 		//시작화면
 		System.out.println("************************************************");
@@ -98,10 +101,15 @@ public class PhoneApp {
 				
 			case 5: 
 				System.out.println("<5.검색>");
-				System.out.print(">이름: ");
-				//String keyword = sc.nextLine();
+				System.out.print(">검색어: ");
+				String keyword = sc.next();
 				
+				keyList = phonedao.personSh(keyword);
 				
+				for(PersonVo vo : keyList) {
+					System.out.println(vo.getPersonId()+". "+vo.getName()+
+							" "+vo.getHp()+" "+vo.getCompany());			
+				}
 				
 				break;	
 			case 6:

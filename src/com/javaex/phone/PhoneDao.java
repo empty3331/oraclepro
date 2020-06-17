@@ -161,8 +161,8 @@ public class PhoneDao {
 	
 	//검색 기능
 	// 정보 수정
-		public void personSh(String keyword) {
-			List<PersonVo> list = new ArrayList<PersonVo>();
+		public List<PersonVo> personSh(String keyword) {
+			List<PersonVo> keyList = new ArrayList<PersonVo>();
 			getConnet();
 			try {
 				// 3. SQL문 준비 / 바인딩 / 실행
@@ -176,21 +176,32 @@ public class PhoneDao {
 				query += " OR hp like ?";
 				query += " OR company like ?";
 				pstmt = conn.prepareStatement(query);
+				
+				String ky = '%'+keyword+'%';
 
-				pstmt.setString(1, );
-				pstmt.setString(2, );
-				pstmt.setString(3, );
+				pstmt.setString(1,ky );
+				pstmt.setString(2,ky);
+				pstmt.setString(3,ky );
 				
 				
-				
-
-				pstmt.executeUpdate();
+				rs = pstmt.executeQuery();
 
 				// 4.결과처리
+				while (rs.next()) {
+					int personId = rs.getInt("person_id");
+					String name = rs.getString("name");
+					String hp = rs.getString("hp");
+					String company = rs.getString("company");
+				
+					PersonVo vo = new PersonVo (personId,name,hp,company);
+					keyList.add(vo);
+				}
+				
 			} catch (SQLException e) {
 				System.out.println("error:" + e);
 			}
 			close();
+			return keyList;
 		}
 
 }
