@@ -44,7 +44,12 @@ public class PhoneApp {
 				System.out.println("<1.리스트>");
 				
 				//화면에 출력
-				phonedao.getPhoneList();
+				 List<PersonVo> phoneList= phonedao.getPhoneList();
+				 for(PersonVo vo : phoneList) {
+						System.out.println(vo.getPersonId()+". "+vo.getName()+" "
+				                           +vo.getHp()+" "+vo.getCompany());
+					}
+					
 				break;
 			
 			case 2: 

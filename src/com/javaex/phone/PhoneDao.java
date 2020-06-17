@@ -127,7 +127,8 @@ public class PhoneDao {
 	}
 
 	// 리스트
-	public void getPhoneList() {
+	public List<PersonVo> getPhoneList() {
+		List<PersonVo> phoneList  = new ArrayList<PersonVo>();
 
 		getConnet();
 		try {
@@ -150,13 +151,15 @@ public class PhoneDao {
 				String hp = rs.getString("hp");
 				String company = rs.getString("company");
 			
-				System.out.println(personId+". "+name+" "+hp+" "+company);
+				PersonVo personVo = new PersonVo(personId, name, hp, company);
+				phoneList.add(personVo);
 			}
 
 		} catch (SQLException e) {
 			System.out.println("error:" + e);
 		}
 		close();
+		return phoneList;
 	}
 	
 	//검색 기능
@@ -172,7 +175,7 @@ public class PhoneDao {
 				query += "        hp,";
 				query += "        company";
 				query += " FROM person";
-				query += " WHERE person_id like ?";
+				query += " WHERE name like ?";
 				query += " OR hp like ?";
 				query += " OR company like ?";
 				pstmt = conn.prepareStatement(query);
